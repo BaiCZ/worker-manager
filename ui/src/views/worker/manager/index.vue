@@ -169,7 +169,6 @@ export default {
         ],
         age: [
           { required: true, message: '请输入', trigger: 'blur' },
-          { min: 1, max: 3, message: '长度在 1 到 3 个字符', trigger: 'blur' }
         ],
         deptName: [
           { required: true, message: '请选择', trigger: 'blur' }
