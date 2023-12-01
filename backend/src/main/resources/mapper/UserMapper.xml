@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bcz.workermanager.mapper.UserMapper">
+
+    <resultMap type="com.bcz.workermanager.pojo.entity.User" id="UserMap">
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into workermgr.user(user_namepasswordintroductionavatar)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.userName}#{entity.password}#{entity.introduction}#{entity.avatar})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into workermgr.user(user_namepasswordintroductionavatar)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userName}#{entity.password}#{entity.introduction}#{entity.avatar})
+        </foreach>
+        on duplicate key update
+user_name = values(user_name) password = values(password) introduction = values(introduction) avatar = values(avatar)     </insert>
+
+</mapper>
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bcz.workermanager.mapper.EmpMapper">
+
+    <resultMap type="com.bcz.workermanager.pojo.entity.Emp" id="EmpMap">
+        <result property="empId" column="emp_id" jdbcType="INTEGER"/>
+        <result property="empName" column="emp_name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+        <result property="empDegreeName" column="emp_degree_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="empId" useGeneratedKeys="true">
+        insert into workermgr.emp(emp_namesexagedept_nameemp_degree_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.empName}#{entity.sex}#{entity.age}#{entity.deptName}#{entity.empDegreeName})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="empId" useGeneratedKeys="true">
+        insert into workermgr.emp(emp_namesexagedept_nameemp_degree_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.empName}#{entity.sex}#{entity.age}#{entity.deptName}#{entity.empDegreeName})
+        </foreach>
+        on duplicate key update
+emp_name = values(emp_name) sex = values(sex) age = values(age) dept_name = values(dept_name) emp_degree_name = values(emp_degree_name)     </insert>
+
+</mapper>
+
